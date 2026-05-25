@@ -457,5 +457,42 @@
     </div>
   </footer>
 
+  //Aunthetication code to enhance security using google verification 
+  <!-- Firebase App -->
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+  import { getAuth, GoogleAuthProvider, signInWithPopup, signOut, onAuthStateChanged }
+    from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyBnGsFh61RxlMiJKE3aHFZz3CB4H_RgDGc",
+    authDomain: "my-portfolio-4e8ea.firebaseapp.com",
+    
+
+    projectId: "my-portfolio-4e8ea",
+    storageBucket: "my-portfolio-4e8ea.firebasestorage.app",
+    messagingSenderId: "269516234172",
+    appId: "1:269516234172:web:9079dcaf52fdf3feabdfb9"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const auth = getAuth(app);
+  const provider = new GoogleAuthProvider();
+
+  // Sign In
+  window.signIn = () => signInWithPopup(auth, provider);
+
+  // Sign Out
+  window.signOut = () => signOut(auth);
+
+  // Detect auth state
+  onAuthStateChanged(auth, (user) => {
+    if (user) {
+      console.log("Logged in as:", user.email);
+    } else {
+      console.log("Logged out");
+    }
+  });
+</script>
 </body>
 </html>
