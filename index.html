@@ -487,12 +487,19 @@
 
   // Detect auth state
   onAuthStateChanged(auth, (user) => {
-    if (user) {
-      console.log("Logged in as:", user.email);
+  if (user) {
+    const SUPER_ADMIN = "mgodimgodi6@gmail.com";
+    if (user.email === SUPER_ADMIN) {
+      console.log("✅ Welcome Super Admin:", user.email);
+      // We'll redirect to admin dashboard here
     } else {
-      console.log("Logged out");
+      console.log("⛔ Access denied:", user.email);
+      signOut(auth);
     }
-  });
+  } else {
+    console.log("Logged out");
+  }
+});
 </script>
 </body>
 </html>
