@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Super Admin Dashboard</title>
+  <link rel="stylesheet" href="admin.css">
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+<body>
+
+  <!-- AUTH GUARD — shown while checking login -->
+  <div id="auth-loading">
+    <div class="auth-spinner">
+      <i class="fas fa-shield-alt"></i>
+      <p>Verifying identity...</p>
+    </div>
+  </div>
+
+  <!-- DASHBOARD — hidden until auth confirmed -->
+  <div id="dashboard" style="display:none">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+      <div class="sidebar-brand">BM<span class="dot">.</span> Admin</div>
+      <nav class="sidebar-nav">
+        <a href="#" class="nav-item active" data-section="contributors">
+          <i class="fas fa-users"></i> Contributors
+        </a>
+        <a href="#" class="nav-item" data-section="settings">
+          <i class="fas fa-cog"></i> Settings
+        </a>
+      </nav>
+      <div class="sidebar-footer">
+        <div class="admin-info">
+          <i class="fas fa-crown"></i>
+          <span id="admin-email"></span>
+        </div>
+        <button onclick="signOutAdmin()" class="signout-btn">
+          <i class="fas fa-sign-out-alt"></i> Sign Out
+        </button>
+      </div>
+    </aside>
+
+    <!-- MAIN CONTENT -->
+    <main class="main-content">
+
+      <!-- HEADER -->
+      <div class="dash-header">
+        <div>
+          <h1>Super Admin Dashboard</h1>
+          <p class="dash-subtitle">Manage your project contributors</p>
+        </div>
+        <div class="dash-badge">
+          <i class="fas fa-shield-alt"></i> Secure Session
+        </div>
+      </div>
+
+      <!-- STATS -->
+      <div class="stats-row">
+        <div class="stat-card">
+          <i class="fas fa-users"></i>
+          <div>
+            <span class="stat-num" id="total-contributors">0</span>
+            <span class="stat-label">Contributors</span>
+          </div>
+        </div>
+        <div class="stat-card">
+          <i class="fas fa-code-branch"></i>
+          <div>
+            <span class="stat-num">2</span>
+            <span class="stat-label">Branches</span>
+          </div>
+        </div>
+        <div class="stat-card">
+          <i class="fas fa-lock"></i>
+          <div>
+            <span class="stat-num">1</span>
+            <span class="stat-label">Protected</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- CONTRIBUTORS SECTION -->
+      <div class="section-card">
+        <div class="section-card-header">
+          <h2><i class="fas fa-users"></i> Contributors</h2>
+          <button class="add-btn" onclick="showAddForm()">
+            <i class="fas fa-plus"></i> Add Contributor
+          </button>
+        </div>
+
+        <!-- ADD FORM (hidden by default) -->
+        <div id="add-form" style="display:none" class="add-form">
+          <h3>Add New Contributor</h3>
+          <div class="form-row">
+            <input type="text" id="new-name" placeholder="Full Name" class="admin-input">
+            <input type="text" id="new-github" placeholder="GitHub Username" class="admin-input">
+          </div>
+          <div class="form-row">
+            <input type="text" id="new-role" placeholder="Role (e.g. Developer)" class="admin-input">
+            <select id="new-access" class="admin-input">
+              <option value="Write">Write</option>
+              <option value="Read">Read</option>
+              <option value="Admin">Admin</option>
+            </select>
+          </div>
+          <div class="form-actions">
+            <button onclick="addContributor()" class="btn-save">Save</button>
+            <button onclick="hideAddForm()" class="btn-cancel">Cancel</button>
+          </div>
+        </div>
+
+        <!-- CONTRIBUTORS TABLE -->
+        <div class="table-wrap">
+          <table class="contributors-table">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>GitHub</th>
+                <th>Role</th>
+                <th>Access</th>
+                <th>Added</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody id="contributors-tbody">
+              <tr><td colspan="6" class="loading-row">Loading contributors...</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+    </main>
+  </div>
+
+  <script type="module" src="admin.js"></script>
+</body>
+</html>
